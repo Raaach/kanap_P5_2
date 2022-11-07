@@ -1,11 +1,18 @@
-fetch("http://localhist:3000/api/products")
+fetch("http://localhost:3000/api/products")
     .then((res)=> res.json())
-    .then((data) => console.log(data))
+    .then((data) => addProducts(data))
 
-const anchor = document.createElement ("a") //on cree la const anchor "a"
-anchor.href = "http://localhost:3000/images/kanap01.jpeg" // on lui rajoute un lien 
-anchor.text = "Canapé confortable" // on place un texte
+function addProducts(data){
+    
+    const imageUrl= data[0].imageUrl
+                    
+         
+   const anchor = document.createElement ("a")                  //on cree la const anchor "a" qui donnera <a></a>
+    anchor.href = imageUrl                                      // on lui rajoute un lien 
+    anchor.text = "Canapé confortable"                          // on place un texte
 
-const items = document.querySelector("#items") //on cree la constante items
-items.appendChild(anchor) //on lui donne un enfant qui est anchor (qui est la constente au dessus)
-/* si on a un problème avec la ligne 10, on peut alors écrire: if (items != null)( items.apendChild(anchor))*/
+    const items = document.querySelector("#items")             //on cree la constante items
+    if (items != null){                                        //si items est non null
+        items.appendChild(anchor)                              //on lui donne un enfant qui est anchor (qui est la constente au dessus)
+        }
+    }
