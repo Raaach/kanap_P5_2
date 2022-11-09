@@ -18,27 +18,37 @@ fetch("http://localhost:3000/api/products")
 
         
 function addProducts(data){
-    const _id = data[0]._id     
-    const imageUrl  = data[0].imageUrl
-    const altTxt = data[0].altTxt
-    const name = data[0].name
-    const description = data[0].description
+    console.log(data)
 
-    // const{ _id, imageUrl, altTxt, name, description} = data[0]    // c'est une façon de transformer les quatre lignes 
-                                                                    // du dessus en une ligne    
+    data.forEach((data) => {                                        //poue chaque data fait "data:" suivie de la données serveur
+        console.log("data: ", data)
+        
+                                                                    //const _id = data[0]._id     
+                                                                    //const imageUrl  = data[0].imageUrl
+                                                                    //const altTxt = data[0].altTxt
+                                                                    //const name = data[0].name
+                                                                    //const description = data[0].description
+        
+        const{ _id, imageUrl, altTxt, name, description} = data    // c'est une façon de transformer les cinq lignes 
+                                                                   // du dessus en une ligne    
+        
+        const anchor = makeAnchor(_id) 
+        const article = document.createElement("article")        
+        const image = makeImage(imageUrl, altTxt)
+        const h3 = makeH3(name)
+        const p = makeParagraph(description)                           // const p c'est makeParagraphe depuis descritpion
+        
+        appendElementsToArticle(article, [image, h3, p])
+        appendArticleToAnchor(anchor, article)
+    });
+}
 
-    const anchor = makeAnchor(_id) 
-    const article = document.createElement("article")        
-    const image = makeImage(imageUrl, altTxt)
-    const h3 = makeH3(name)
-    const p = makeParagraph(description)                           // const p c'est makeParagraphe depuis descritpion
-
-    article.appendChild(image)                                    // article aura comment enfant image
-    article.appendChild(h3)
-    article.appendChild(p)
-
-    appendArticleToAnchor(anchor, article)
-    }
+ function appendElementsToArticle(article, array){                     // article aura comment enfant:
+        array.forEach((item) => {                                      //article.appendChild(image)
+            article.appendChild(item)                                  //article.appendChild(h3)
+                                                                       //article.appendChild(p)
+        })      
+}
 
 function makeAnchor(_id){
     const anchor = document.createElement ("a")                   //on cree la const anchor "a" qui donnera <a></a>
