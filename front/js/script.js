@@ -18,10 +18,9 @@ fetch("http://localhost:3000/api/products")
 
         
 function addProducts(data){
-    console.log(data)
-
-    data.forEach((data) => {                                        //poue chaque data fait "data:" suivie de la données serveur
-        console.log("data: ", data)
+    
+    data.forEach((data) => {                                        //pour chaque data fait "data:" suivie de la données serveur
+        
         
                                                                     //const _id = data[0]._id     
                                                                     //const imageUrl  = data[0].imageUrl
