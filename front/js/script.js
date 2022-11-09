@@ -17,18 +17,18 @@ fetch("http://localhost:3000/api/products")
         //_id: "107fb5b75607497b96722bda5b504926"
 
         
-function addProducts(data){
+function addProducts(KanapS){
     
-    data.forEach((data) => {                                        //pour chaque data fait "data:" suivie de la données serveur
+    KanapS.forEach((canape) => {                                        //pour chaque data fait "data:" suivie de la données serveur avec console.log
         
         
-                                                                    //const _id = data[0]._id     
-                                                                    //const imageUrl  = data[0].imageUrl
-                                                                    //const altTxt = data[0].altTxt
-                                                                    //const name = data[0].name
-                                                                    //const description = data[0].description
+                                                                    //const _id = KanapS[0]._id     
+                                                                    //const imageUrl  = KanapS[0].imageUrl
+                                                                    //const altTxt = KanapS[0].altTxt
+                                                                    //const name = KanapS[0].name
+                                                                    //const description = KanapS[0].description
         
-        const{ _id, imageUrl, altTxt, name, description} = data    // c'est une façon de transformer les cinq lignes 
+        const{ _id, imageUrl, altTxt, name, description} = canape    // c'est une façon de transformer les cinq lignes 
                                                                    // du dessus en une ligne    
         
         const anchor = makeAnchor(_id) 
