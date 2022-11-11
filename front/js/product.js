@@ -1,12 +1,11 @@
-//const queryString = window.location.search     //"_id107fb5b75607497b96722bda5b504926"
-//console.log(queryString)
-//const urlParams = new URLSearchParams(queryString)
-//console.log(urlParams)
-//const id = urlParams.get("id")
-//console.log(id)
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const kanapId = urlParams.get("id")
+console.log({kanapId})
 
 
-fetch('http://localhost:3000/api/products/107fb5b75607497b96722bda5b504926')              
+
+fetch('http://localhost:3000/api/products/${kanapId}')              
     .then((response)=> response.json())
     .then((res) => handleData(res))
 
