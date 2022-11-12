@@ -1,11 +1,28 @@
-const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString)
-const kanapId = urlParams.get("id")
-console.log({kanapId})
+//const queryString = window.location.search         //elle est bonne
+//console.log(queryString)
+
+const urlParams = new URLSearchParams(window.location.search)
+console.log(urlParams.searchParams.get('id'))
+
+
+//const myURL = new URL('https://example.org/?abc=123');
+//console.log(myURL.searchParams.get('abc'));
 
 
 
-fetch('http://localhost:3000/api/products/${kanapId}')              
+//const kanapId = urlParams.get("?=_id")
+//console.log({kanapId})
+
+
+
+
+
+/*
+
+
+
+
+fetch('http://localhost:3000/api/products/?${kanapId}')              
     .then((response)=> response.json())
     .then((res) => handleData(res))
 
@@ -57,3 +74,6 @@ function makeColor(colors){
         })
     }
 }
+
+
+*/
