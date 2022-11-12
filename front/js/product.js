@@ -1,9 +1,15 @@
 //const queryString = window.location.search         //elle est bonne
 //console.log(queryString)
 
-const urlParams = new URLSearchParams(window.location.search)
-console.log(urlParams.searchParams.get('id'))
+const params = new URLSearchParams(location.search)
+let id = params.get("id")
+console.log(id)
 
+
+//const urlParams = new URL('http://192.168.1.15:5500/front/html/product.html?=_id415b7cacb65d43b2b5c1ff70f3393ad1')
+//console.log(urlParams.toString(''))
+
+// http://localhost:3000/api/products/107fb5b75607497b96722bda5b504926
 
 //const myURL = new URL('https://example.org/?abc=123');
 //console.log(myURL.searchParams.get('abc'));
