@@ -28,7 +28,7 @@ console.log(id)
 
 
 
-fetch('http://localhost:3000/api/products/?${kanapId}')              
+fetch('http://localhost:3000/api/products/${kanapId}')              
     .then((response)=> response.json())
     .then((res) => handleData(res))
 
