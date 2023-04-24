@@ -1,86 +1,60 @@
-fetch('http://localhost:3000/api/products')
-    .then((res)=> res.json())
-    .then((data) => addProducts(data))
+/*Utilisation de la fonction Fetch pour faire un appel API
+afin d'obtenir les données des produits sur le localhost:3000*/
 
- //   .then((data) => {                                       //pour consoleloger une fonction, on ecrit 
- //       console.log(data)                                   //on ajoute console.log()
- //       return addProducts(data)})                          //le return devant la fonction de base
+fetch("http://localhost:3000/api/products/")
+  .then((response) => {
+    return response.json();
+  })
+  .then((kanap) => {
+    // console.log(kanap)
+    return produitAccueil(kanap);
+  });
 
+/*creation d'une fonction pour récupérer les données mise en 
+commentaire dans le fichier index.html ligne 94 à 100*/
 
- /* les infos en dessous sont recupéré de la basse de donnée qui corresponds au data[0] */ 
-        //altTxt: "Photo d'un canapé bleu, deux places"
-        //colors:(3) ['Blue', 'White', 'Black']
-        //description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim _id est laborum."
-        //imageUrl: "http://localhost:3000/images/kanap01.jpeg"
-        //name: "Kanap Sinopé"
-        //price: 1849
-        //_id: "107fb5b75607497b96722bda5b504926"
+function produitAccueil(array) {
+  //création d'une boucle pour avoir les données pour chaque produit
+  array.forEach((array) => {
+    const id = array._id;
 
-        
-function addProducts(KanapS){
-    
-    KanapS.forEach((canape) => {                                        //pour chaque data fait "data:" suivie de la données serveur avec console.log
-        
-        
-                                                                    //const _id = KanapS[0]._id     
-                                                                    //const imageUrl  = KanapS[0].imageUrl
-                                                                    //const altTxt = KanapS[0].altTxt
-                                                                    //const name = KanapS[0].name
-                                                                    //const description = KanapS[0].description
-        
-        const{ _id, imageUrl, altTxt, name, description} = canape    // c'est une façon de transformer les cinq lignes 
-                                                                   // du dessus en une ligne    
-        
-        const anchor = makeAnchor(_id) 
-        const article = document.createElement("article")        
-        const image = makeImage(imageUrl, altTxt)
-        const h3 = makeH3(name)
-        const p = makeParagraph(description)                           // const p c'est makeParagraphe depuis descritpion
-        
-        appendElementsToArticle(article, [image, h3, p])
-        appendArticleToAnchor(anchor, article)
-    });
+    // variable pour créer la balise alt et son href
+    const aHref = document.createElement("a");
+    aHref.href = "./product.html?id=" + id;
+
+    // variable pour créer la balise article
+    const article = document.createElement("article");
+
+    // donnée et détail pour l'image
+    const image = document.createElement("img");
+    image.src = array.imageUrl;
+    image.alt = array.altTxt + " , " + array.name;
+
+    // donnée et détail dans la balise h3
+    const h3 = document.createElement("h3");
+    h3.classList.add("productName");
+    h3.textContent = array.name;
+
+    // donné et détail dans la balise p
+    const p = document.createElement("p");
+    p.classList.add("productDescription");
+    p.textContent = array.description;
+
+    // appel de la fonction afin de montrer les enfants du parent #Items
+    createTagElement(aHref, article, image, h3, p);
+  });
 }
 
- function appendElementsToArticle(article, array){                     // article aura comment enfant:
-        array.forEach((item) => {                                      //article.appendChild(image)
-            article.appendChild(item)                                  //article.appendChild(h3)
-                                                                       //article.appendChild(p)
-        })      
+/*Fonction qui permet de donner des enfants au parent #items afin
+de le rendre visible dans le code html dans le DOM*/
+
+function createTagElement(aHref, article, image, h3, p) {
+  const items = document.querySelector("#items");
+  if (items != null) {
+    items.appendChild(aHref);
+    aHref.appendChild(article);
+    article.appendChild(image);
+    article.appendChild(h3);
+    article.appendChild(p);
+  }
 }
-
-function makeAnchor(_id){
-    const anchor = document.createElement ("a")                   //on cree la const anchor "a" qui donnera <a></a>
-    anchor.href = "./product.html?=_id" + _id                       // on lui rajoute un lien + requète
-    return anchor                                                 // la fonction s'arrete
-    }
-
-function appendArticleToAnchor(anchor, article){
-        const items = document.querySelector("#items")             //on cree la constante items en sélctionnant le items de l'index html
-        if (items != null){                                        //si items est non null
-            items.appendChild(anchor)                              //on lui donne un enfant qui est anchor (qui est la constente au dessus)
-            anchor.appendChild(article)
-        }
-    }
-
-function makeImage(imageUrl, altTxt){
-        const image = document.createElement("img")
-        image.src = imageUrl
-        image.alt = altTxt
-        return image
-        
-    }
-
-function makeH3(name){
-        const h3 = document.createElement("h3")
-        h3.textContent = name
-        h3.classList.add("productName")
-        return h3
-     }
-
-function makeParagraph(description){
-    const p = document.createElement("p")
-    p.textContent = description
-    p.classList.add("productDescription")
-    return p
-    }
