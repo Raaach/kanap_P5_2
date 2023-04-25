@@ -24,15 +24,25 @@ function displayItem(item){
   const cartItemContent = makeCartContent(item)  
   article.appendChild(cartItemContent)
   displayArticle(article) //montre le/lance le (il s'affichera une fois que tout sera terminé)
-  displayTotalQuantity(item)
+  displayTotalQuantity()
+  displayTotalPrice()
 }
 
-function displayTotalQuantity(item){
+function displayTotalQuantity(){
   const totalQuantity = document.querySelector("#totalQuantity")
-  totalQuantity.textContent = item.quantity
-  //console.log(cart)
-  const firstItem = cart[0]
-  const firstItemTotalQuantity = firstItem*firstItem.price
+  const total = cart.reduce((total, item) => total + item.quantity, 0)
+  totalQuantity.textContent = total
+}
+
+function displayTotalPrice(){
+  let total = 0
+  const totalPrice = document.querySelector("#totalPrice")
+  cart.forEach(item => {
+    const totalUnitPrice = item.price * item.quantity
+    total = total + totalUnitPrice // on peut aussi l'écrire total += totalUnitPrice
+  })
+  console.log(total)
+  totalPrice.textContent = total
 }
 
 
