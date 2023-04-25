@@ -2,16 +2,18 @@ const cart = []
 
 retrieveItemsFromCache()
 console.log(cart) //on le place ici pour permettre à la fonction d'apparaitre avec console.log dans la console 
-cart.forEach((item)=>displayItem(item))
+cart.forEach((item)=>displayItem(item))//une boucle: pour chaque item lace la fonction
 
 function retrieveItemsFromCache(){
   const numberOfItems = localStorage.length
     for (let i = 0; i < numberOfItems; i++){
       const item = localStorage.getItem(localStorage.key(i))||""
-      const itemObject = JSON.parse(item)
-      cart.push(itemObject)
+      const itemObject = JSON.parse(item) // parse pour en faire un objet
+      cart.push(itemObject)// à chaque fois qu'on trouve un objet, on va pusher cette objet là 
     }
 }// a revoir car un peu chinois
+
+//item correspond aux données qui sont l'id, image, couleur etc...
 
 function displayItem(item){
   const article = makeArticle(item) //fait un article
@@ -119,7 +121,8 @@ function displayArticle(article) { //on lui passe comme argument article
 function makeArticle(item) {
   const article = document.createElement("article")
   article.classList.add("cart__item")
-  article.dataset.id = item.id
+  article.dataset.id = item.id//Ce stockage, invisible par le navigateur et par les moteurs de recherche, 
+  //permet de stocker toutes les informations que nous souhaitons dans toutes les balises HTML de notre page
   article.dataset.color = item.color
   return article
 }
