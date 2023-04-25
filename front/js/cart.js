@@ -29,6 +29,7 @@ function displayItem(item){
 
 function displayTotalQuantity(item){
   const totalQuantity = document.querySelector("#totalQuantity")
+  totalQuantity.textContent = item.quantity
   //console.log(cart)
   const firstItem = cart[0]
   const firstItemTotalQuantity = firstItem*firstItem.price
