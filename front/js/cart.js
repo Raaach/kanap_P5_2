@@ -96,10 +96,20 @@ function addQuantityToSettings(settings, item) {
   input.min = "1"
   input.max = "100"
   input.value = item.quantity
+  input.addEventListener("input", ()=> updatePriceAndQuantity(item.id, input.value)) 
+                  // on envoie le id et le input dans la function updatePriceAndQuantity
+
+
   quantity.appendChild(input)
-  
   settings.appendChild(quantity)
 
+}
+
+function updatePriceAndQuantity(id, newValue){
+  const itemToUpdate = cart.find((item) => item.id === id)// on lui demande de chercher dans item l'id qui correspond au id
+  itemToUpdate.quantity = Number(newValue)// on a mis number pour afficher le résultat en chiffre
+  displayTotalQuantity()//on appelle les display pour relancer la fonction corespondante
+  displayTotalPrice()   //pour avoir une nouvelle quantité et un nouveau prix
 }
 
 function makeDescription(item){
