@@ -89,6 +89,24 @@ function deleteItem(item){
 
   cart.splice(itemToDelete, 1)
   //console.log(cart)
+  displayTotalPrice()
+  displayTotalQuantity()
+  deleteDataFromCache(item)
+  deleteArticleFromCart(item)
+}
+
+function deleteArticleFromCart(item){
+  const articleToDelete = document.querySelector(
+    `article[data-id="${item.id}"][data-color="${item.color}"]`
+  )
+  console.log("article à suprimer:", articleToDelete)
+  articleToDelete.remove()
+}
+
+function deleteDataFromCache(item){
+  const key = `${item.id}-${item.color}`
+  console.log("on delete cette key :", key)
+  localStorage.removeItem(key)
 }
 
 function addQuantityToSettings(settings, item) {
