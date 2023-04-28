@@ -63,22 +63,32 @@ function makeSettings(item) {
   settings.classList.add("cart__item__content__settings")
 
   addQuantityToSettings(settings, item)
-  addDeleteToSettings(settings)
+  addDeleteToSettings(settings, item)
 
   return settings
 }
 
-function addDeleteToSettings(settings) {
+function addDeleteToSettings(settings, item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__content__settings__delete")
+  div.addEventListener("click", () => deleteItem(item))
 
   const p = document.createElement("p")
-  p.classList.add("deleteItem")
+  //p.classList.add("deleteItem")
   p.textContent= "Supprimer"
 
   div.appendChild(p)
   settings.appendChild(div)
 
+}
+
+function deleteItem(item){
+  const itemToDelete = cart.findIndex((kanap) => kanap.id === item.id && kanap.color === item.color) // le Index signifie qu'on veut juste voir une simple donée comme un chiffre et nom tt le item
+  // dans le cart trouve le produit, ici kanap
+  // tel que son id soit égale au item.id
+
+  cart.splice(itemToDelete, 1)
+  //console.log(cart)
 }
 
 function addQuantityToSettings(settings, item) {
