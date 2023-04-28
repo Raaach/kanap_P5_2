@@ -17,7 +17,7 @@ function retrieveItemsFromCache(){
 
 function displayItem(item){
   const article = makeArticle(item) //fait un article
-    console.log(article)//affiche article dans la console
+    //console.log(article)//affiche article dans la console
   const imageDiv = makeImageDiv(item) //fait une div 
   article.appendChild(imageDiv)// on donné à article un enfant div qui lui contient l'image
   
@@ -41,7 +41,7 @@ function displayTotalPrice(){
     const totalUnitPrice = item.price * item.quantity
     total = total + totalUnitPrice // on peut aussi l'écrire total += totalUnitPrice
   })
-  console.log(total)
+  //console.log(total)
   totalPrice.textContent = total
 }
 
@@ -99,13 +99,13 @@ function deleteArticleFromCart(item){
   const articleToDelete = document.querySelector(
     `article[data-id="${item.id}"][data-color="${item.color}"]`
   )
-  console.log("article à suprimer:", articleToDelete)
+  //console.log("article à suprimer:", articleToDelete)
   articleToDelete.remove()
 }
 
 function deleteDataFromCache(item){
   const key = `${item.id}-${item.color}`
-  console.log("on delete cette key :", key)
+  //console.log("on delete cette key :", key)
   localStorage.removeItem(key)
 }
 

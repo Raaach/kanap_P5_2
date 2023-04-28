@@ -23,7 +23,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
   });
 
   function handleData(Kanap){                                 //je récupère toute les donnéees du Kanap
-    console.log({Kanap})
+   //console.log({Kanap})
     const {altTxt, colors, description, imageUrl,name, price}= Kanap//et je les passe à make... de chacun d'eux
     imgUrl= imageUrl
     altText = altTxt
