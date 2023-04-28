@@ -1,3 +1,4 @@
+
 const cart = []
 
 retrieveItemsFromCache()
@@ -195,3 +196,44 @@ function makeImageDiv(item){
   return div
 }
 
+const orderButton = document.querySelector("#order")
+orderButton.addEventListener("click", (e) => submitForm(e))
+
+function submitForm(e){
+  e.preventDefault() // preventDefeult permet de ne pas raffraichir la page
+  if (cart.length === 0) alert(" Veuillez séléctionnner un produits")
+  
+  const body = makeRequestFormulaire
+  fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "content-type": "application/json"
+    }
+  })
+    .then((res) => res.json)
+    .then((data) => console.log(data))
+  //console.log(form.elements)
+}
+
+function makeRequestFormulaire (){
+  const form = document.querySelector(".cart__order__form")
+
+  const firstName= form.elements.firstName.value
+  const lastName= form.elements.lastName.value
+  const address= form.elements.address.value
+  const city= form.elements.city.value
+  const email= form.elements.email.value
+
+  const body = {
+    contact : {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      city: city,
+      email: email
+    },
+    products: ["straship"]
+  }
+  return body
+}
