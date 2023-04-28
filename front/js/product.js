@@ -84,16 +84,16 @@ if (button != null){                                                // si le but
 }
 
 function saveCart(color,quantity){
-  const key = `${id}-${color}`
+  const key = `${id}-${color}`                        // key est égale à l'id et à la couleur correspondant
   const donnee = {
-      id: id,                                       //       // toujours le meme problème avec l'id//
+      id: id,                                       
      color: color,
      quantity: Number(quantity),
      price: itemPrice,                              // le price à ne pas mettre dans le localstorage mais via fetch
      imageUrl : imgUrl, 
      altTxt : altText,
      name: articleName, 
- }                                                   //        // message d'erreur à cause du id et aussi sur le localstorage
+ }                                                   // dans le local storage on a la key qui s'affiche en string
  localStorage.setItem(key, JSON.stringify(donnee))   
 }
 
