@@ -233,7 +233,11 @@ function makeRequestFormulaire (){
       city: city,
       email: email
     },
-    products: ["straship"]
+    products: getIdsFromCach()
   }
   return body
+}
+
+function getIdsFromCach(){
+  
 }
