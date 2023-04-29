@@ -223,7 +223,7 @@ function submitForm(e){
       window.location.href = "/front/html/confirmation.html" + "?orderId=" + orderId
       return console.log(data)
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.error(err)) // ça permet d'avoir un message en rouge
   //console.log(form.elements)
 }
 
