@@ -201,7 +201,13 @@ orderButton.addEventListener("click", (e) => submitForm(e))
 
 function submitForm(e){
   e.preventDefault() // preventDefeult permet de ne pas raffraichir la page
-  if (cart.length === 0) alert(" Veuillez séléctionnner un produit")
+  if (cart.length === 0) {
+    alert(" Veuillez séléctionnner un produit")
+    return // on lui mets un retunr comme ça si c'est incomplet il s'arretera là et ne lira pas tout le code
+  }
+
+  if (isFormulaireInvalide()) return
+  if (isEmailValide()) return
   
   const body = makeRequestFormulaire()
   fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
@@ -214,6 +220,28 @@ function submitForm(e){
     .then((res) => res.json())
     .then((data) => console.log(data))
   //console.log(form.elements)
+}
+
+function isFormulaireInvalide(){
+  const form = document.querySelector(".cart__order__form")
+  const inputs = form.querySelectorAll("input")
+  inputs.forEach((input) => {
+    if (input.value === "") {
+      alert("S'il vous plait remplissez toute les cases")
+      return true
+    }
+    return false
+  })
+}
+
+function isEmailValide(){
+  const email = document.querySelector("#email").value
+  const regex = /^[A-Za-z0-9+_.-]+@(.+)$/
+  if (regex.test(email) === false) {
+    alert("S'il vous plait entrez un email valide")
+    return true
+  }
+  return false
 }
 
 function makeRequestFormulaire (){
