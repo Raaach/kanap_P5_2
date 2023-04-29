@@ -201,17 +201,17 @@ orderButton.addEventListener("click", (e) => submitForm(e))
 
 function submitForm(e){
   e.preventDefault() // preventDefeult permet de ne pas raffraichir la page
-  if (cart.length === 0) alert(" Veuillez séléctionnner un produits")
+  if (cart.length === 0) alert(" Veuillez séléctionnner un produit")
   
-  const body = makeRequestFormulaire
+  const body = makeRequestFormulaire()
   fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
     method: "POST",
     body: JSON.stringify(body),
     headers: {
-      "content-type": "application/json"
+      "Content-Type": "application/json"
     }
   })
-    .then((res) => res.json)
+    .then((res) => res.json())
     .then((data) => console.log(data))
   //console.log(form.elements)
 }
@@ -235,9 +235,18 @@ function makeRequestFormulaire (){
     },
     products: getIdsFromCach()
   }
+  //console.log(body)
   return body
 }
 
-function getIdsFromCach(){
-  
+function getIdsFromCach() {
+  const numberOfProducts = localStorage.length
+  const ids = []
+  for (let i = 0; i < numberOfProducts; i++) {
+    const key = localStorage.key(i)
+    //console.log(key)
+    const id = key.split("-")[0]
+    ids.push(id)
+  }
+  return ids
 }
