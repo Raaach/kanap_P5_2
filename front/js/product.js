@@ -98,9 +98,13 @@ function saveCart(color,quantity){
 }
 
 function isCartInvalid(color, quantity){
-  if (color == null || color === '' || quantity == null || quantity == 0){
-      alert("Séléctionnez la couleur et la quantité, Merci !")// si on a pas séléctionné le prix ou la couleur
-      return true                                             // veut dire arrète toi
-  }                                                           // alors la popup affichera le message alerte
-  
-} 
+ // if (color == null || color === '' || quantity == null || quantity == 0){
+ //     alert("Séléctionnez la couleur et la quantité, Merci !")// si on a pas séléctionné le prix ou la couleur
+ //     return true                                             // veut dire arrète toi
+ // }                                                           // alors la popup affichera le message alerte
+  if (color == null|| color === ''){
+  alert("veuillez choisir une couleur, merciii :)")} // si la couleur n'est pas choisis alerte moi (suivie du message)
+  if (quantity == null || quantity == 0)
+  alert("veuillez choisir une quantité, merci bian à vous :)")
+  return true //veut dire arrete toi 
+} //alors la popup affichera le message alerte

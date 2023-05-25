@@ -122,7 +122,7 @@ function addQuantityToSettings(settings, item) {
   input.type = "number"
   input.classList.add("itemQuantity")
   input.name = "itemQuantity"
-  input.min = "1"
+  input.min = "0"
   input.max = "100"
   input.value = item.quantity
   input.addEventListener("input", () => updatePriceAndQuantity(item.id, input.value,item)) 
