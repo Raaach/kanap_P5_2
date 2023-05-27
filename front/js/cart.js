@@ -24,9 +24,10 @@ function displayItem(item){
   
   const cartItemContent = makeCartContent(item)  
   article.appendChild(cartItemContent)
-  displayArticle(article) //montre le/lance le (il s'affichera une fois que tout sera terminé)
+  displayArticle(article) //-montre le/lance le- (il s'affichera une fois que tout sera terminé)
   displayTotalQuantity()
   displayTotalPrice()
+  //quantityPositif()
 }
 
 function displayTotalQuantity(){
@@ -45,6 +46,18 @@ function displayTotalPrice(){
   //console.log(total)
   totalPrice.textContent = total
 }
+
+/*************************/
+
+
+function quantityPositif(quantity){
+   if (quantity <= 0 || quantity >= 101 ){
+     alert("veuillez choisir une quatité entre 1 et 100, merci bien")
+     return true}
+ } //alors la popup affichera le message alerte et bloquera le tout
+
+/*************************/
+
 
 
 function makeCartContent(item) {
@@ -197,7 +210,11 @@ function makeImageDiv(item){
 }
 
 const orderButton = document.querySelector("#order")
-orderButton.addEventListener("click", (e) => submitForm(e))
+if (orderButton != null ){
+  orderButton.addEventListener("click", (e) => submitForm(e))
+
+  
+}
 
 function submitForm(e){
   e.preventDefault() // preventDefeult permet de ne pas raffraichir la page
@@ -205,7 +222,6 @@ function submitForm(e){
     alert(" Veuillez séléctionnner un produit")
     return // on lui mets un retunr comme ça si c'est incomplet il s'arretera là et ne lira pas tout le code
   }
-
   if (isFormulaireInvalide()) return
   if (isEmailValide()) return
   

@@ -105,7 +105,10 @@ function isCartInvalid(color, quantity){
   if (color == null|| color === ''){
   alert("veuillez choisir une couleur, merciii :)") // si la couleur n'est pas choisis alerte moi (suivie du message)
   return true}
-  if (quantity == null || quantity == 0){
-  alert("veuillez choisir une quantité, merci bian à vous :)")
+  if (quantity == null || quantity == 0 ){
+  alert("veuillez choisir une quantité, merci bien à vous :)")
   return true} //veut dire arrete toi 
+  if (quantity <= 0 || quantity >= 101 ){
+    alert("veuillez choisir une quatité entre 1 et 100, merci bien")
+    return true}
 } //alors la popup affichera le message alerte
