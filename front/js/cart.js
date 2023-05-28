@@ -258,6 +258,10 @@ function isFormulaireInvalide(){
 function isEmailValide(){
   const email = document.querySelector("#email").value
   const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
+  if (email == "" ){
+    alert ("Veuillez saisir un email valide.")
+    return true
+  }
   if (regex.test(email) === false) {
     alert("S'il vous plait entrez un email valide")
     return true
