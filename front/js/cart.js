@@ -27,14 +27,13 @@ function displayItem(item){
   displayArticle(article) //-montre le/lance le- (il s'affichera une fois que tout sera terminé)
   displayTotalQuantity()
   displayTotalPrice()
-  //quantityPositif()
 }
 
 function displayTotalQuantity(){
   const totalQuantity = document.querySelector("#totalQuantity")
   const total = cart.reduce((total, item) => total + item.quantity, 0)
   totalQuantity.textContent = total
-}
+} 
 
 function displayTotalPrice(){
   let total = 0
@@ -50,11 +49,6 @@ function displayTotalPrice(){
 /*************************/
 
 
-function quantityPositif(quantity){
-   if (quantity <= 0 || quantity >= 101 ){
-     alert("veuillez choisir une quatité entre 1 et 100, merci bien")
-     return true}
- } //alors la popup affichera le message alerte et bloquera le tout
 
 /*************************/
 
@@ -134,26 +128,35 @@ function addQuantityToSettings(settings, item) {
   const input = document.createElement("input")
   input.type = "number"
   input.classList.add("itemQuantity")
+  input.id = item.id
   input.name = "itemQuantity"
   input.min = "0"
   input.max = "100"
   input.value = item.quantity
-  input.addEventListener("input", () => updatePriceAndQuantity(item.id, input.value,item)) 
-                  // on envoie le id et le input dans la function updatePriceAndQuantity
-
+  // on envoie le id et le input dans la function updatePriceAndQuantity
+  input.addEventListener("change", () => updatePriceAndQuantity(item.id, input.value, item))
+  input.addEventListener("input", () => updatePriceAndQuantity(item.id, input.value, item))
 
   quantity.appendChild(input)
   settings.appendChild(quantity)
-
 }
 
-function updatePriceAndQuantity(id, newValue,item){
-  const itemToUpdate = cart.find((item) => item.id === id)// on lui demande de chercher dans item l'id qui correspond au id
-  itemToUpdate.quantity = Number(newValue)// on a mis number pour afficher le résultat en chiffre
-  item.quantity = itemToUpdate.quantity
+function updatePriceAndQuantity(id, newValue, item){
+  const itemToUpdate = cart.find((item) => item.id === id) // on lui demande de chercher dans item l'id qui correspond au id
+  itemToUpdate.quantity = Number(newValue) // on a mis number pour afficher le résultat en chiffre
+
+  if(item.quantity > 0 && item.quantity < 101){
+    item.quantity = itemToUpdate.quantity
+  } else {
+    alert("Veuillez choisir une quatité entre 1 et 100, merci bien")
+    const input = document.getElementById(`${item.id}`)
+    input.value = 1
+    item.quantity = 1
+  }
   displayTotalQuantity()//on appelle les display pour relancer la fonction corespondante
   displayTotalPrice()   //pour avoir une nouvelle quantité et un nouveau prix
   saveNewDataToCache(item)
+
 }
 
 function saveNewDataToCache(item){
@@ -213,7 +216,6 @@ const orderButton = document.querySelector("#order")
 if (orderButton != null ){
   orderButton.addEventListener("click", (e) => submitForm(e))
 
-  
 }
 
 function submitForm(e){
@@ -222,10 +224,15 @@ function submitForm(e){
     alert(" Veuillez séléctionnner un produit")
     return // on lui mets un retunr comme ça si c'est incomplet il s'arretera là et ne lira pas tout le code
   }
-  if (isFormulaireInvalide()) return
-  if (isEmailValide()) return
-  
+  //if (!isFormulaireIsValide())  return 
+  if (!firstNameValide()) return
+  if (!lastNameValide()) return
+  if (!addressValide()) return
+  if (!cityValide()) return
+  if (!isEmailValide()) return
+
   const body = makeRequestFormulaire()
+  
   fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
     method: "POST",
     body: JSON.stringify(body),
@@ -243,115 +250,121 @@ function submitForm(e){
   //console.log(form.elements)
 }
 
-function isFormulaireInvalide(){
-  const form = document.querySelector(".cart__order__form")
-  const inputs = form.querySelectorAll("input")
-  inputs.forEach((input) => {
-    if (input.value === "") {
-      alert("S'il vous plait remplissez toute les cases")
-      return true
-    }
-    return false
-  })
-}
 // 
 // function isFormulaireInvalide(){
-  // firstNameValide()
-  // lastNameValide()
-  // addressValide()
-  // cityValide()
-  // emailValide()
-  // return 
-// }
-// 
-// function firstNameValide(){
-  // const firstNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
-  // const firstName = document.getElementById("firstName")
-  // const firstNameError = document.getElementById("firstNameErrorMsg")
-  // const firstNameValue = firstName.value.trim()
-  // let check = true
-  // 
-  // if (firstNameValue.match(firstNameRegex)) {
-    // firstNameError.innerHTML = ""
-  // } else{
-    // check = false
-    // firstNameError.innerHTML = "Veuillez saisir un prénom valide"
-  // }
-// }
-// 
-// function lastNameValide() {
-  // const lastNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
-  // const lastName = document.getElementById("lastName")
-  // const lastNameError = document.getElementById("lastNameErrorMsg")
-  // const lastNameValue = lastName.value.trim()
-  // let check = true
-// 
-  // if (lastNameValue.match(lastNameRegex)) {
-    // lastNameError.innerHTML = ""
-  // } else{
-    // check = false
-    // lastNameError.innerHTML = "Veuillez saisir un Nom valide"
-  // }
-// }
-// 
-// function addressValide() {
-  // const addressRegex =/^[A-Za-z0-9'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{5,50}$/
-  // const address = document.getElementById("address")
-  // const addressError = document.getElementById("addressErrorMsg")
-  // const addressValue = address.value.trim()
-  // let check = true
-// 
-  // if (addressValue.match(addressRegex)) {
-    // addressError.innerHTML = ""
-  // } else{
-    // check = false
-    // addressError.innerHTML = "Veuillez saisir une Adresse valide"
-  // }
-// }
-// 
-// function cityValide() {
-  // const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
-  // const city = document.getElementById("city")
-  // const cityError = document.getElementById("cityErrorMsg")
-  // const cityValue = city.value.trim()
-  // let check = true
-// 
-  // if (cityValue.match(cityRegex)) {
-    // cityError.innerHTML = ""
-  // } else{
-    // check = false
-    // cityError.innerHTML = "Veuillez saisir une Ville valide"
-  // }
-// }
-// 
-// function emailValide() {
-  // const emailRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]+@(.+){3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
-  // const email = document.getElementById("email")
-  // const emailError = document.getElementById("emailErrorMsg")
-  // const emailValue = email.value.trim()
-  // let check = true
-// 
-  // if (emailValue.match(emailRegex)) {
-    // emailError.innerHTML = ""
-  // } else{
-    // check = false
-    // emailError.innerHTML = "Veuillez saisir une Eamil valide"
-  // }
+  // const form = document.querySelector(".cart__order__form")
+  // const inputs = form.querySelectorAll("input")
+  // inputs.forEach((input) => {
+    // if (input.value === "") {
+      // alert("S'il vous plait remplissez toute les cases")
+      // return true
+    // }
+    // return false
+  // })
 // }
 
-function isEmailValide(){
-  const email = document.querySelector("#email").value
-  const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
-  if (email == "" ){
-    alert ("Veuillez saisir un email valide.")
-    return true
+//  function isFormulaireIsValide(){
+  // if (firstNameValide())
+  // if (lastNameValide())
+  // if (addressValide())
+  // if (cityValide())
+  // if (isEmailValide())
+  //  return 
+//  }
+
+function firstNameValide(){
+  const firstNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
+  const firstName = document.getElementById("firstName")
+  const firstNameError = document.getElementById("firstNameErrorMsg")
+  const firstNameValue = firstName.value.trim()
+  let check = true
+  
+  if (firstNameValue.match(firstNameRegex)) {
+    firstNameError.innerHTML = ""
+  } else{
+    check = false
+    firstNameError.innerHTML = "Veuillez saisir un prénom valide"
   }
-  else{ (regex.test(email) === false) 
-    alert("S'il vous plait entrez un email valide")
-    return true
+  return check
+ }
+
+function lastNameValide() {
+  const lastNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
+  const lastName = document.getElementById("lastName")
+  const lastNameError = document.getElementById("lastNameErrorMsg")
+  const lastNameValue = lastName.value.trim()
+  let check = true
+
+  if (lastNameValue.match(lastNameRegex)) {
+    lastNameError.innerHTML = ""
+  } else{
+    check = false
+    lastNameError.innerHTML = "Veuillez saisir un Nom valide"
   }
-  return false
+  return check
 }
+
+function addressValide() {
+  const addressRegex =/^[A-Za-z0-9'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{5,50}$/
+  const address = document.getElementById("address")
+  const addressError = document.getElementById("addressErrorMsg")
+  const addressValue = address.value.trim()
+  let check = true
+
+  if (addressValue.match(addressRegex)) {
+    addressError.innerHTML = ""
+  } else{
+    check = false
+    addressError.innerHTML = "Veuillez saisir une Adresse valide"
+  }
+  return check
+}
+
+function cityValide() {
+  const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
+  const city = document.getElementById("city")
+  const cityError = document.getElementById("cityErrorMsg")
+  const cityValue = city.value.trim()
+  let check = true
+
+  if (cityValue.match(cityRegex)) {
+    cityError.innerHTML = ""
+  } else{
+    check = false
+    cityError.innerHTML = "Veuillez saisir une Ville valide"
+  }
+  return check
+}
+
+function isEmailValide() {
+  const emailRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]+@(.+){3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
+  const email = document.getElementById("email")
+  const emailError = document.getElementById("emailErrorMsg")
+  const emailValue = email.value.trim()
+  let check = true
+
+  if (emailValue.match(emailRegex)) {
+    emailError.innerHTML = ""
+  } else{
+    check = false
+    emailError.innerHTML = "Veuillez saisir une Eamil valide"
+  }
+  return check
+}
+
+// function isEmailValide(){
+  // const email = document.querySelector("#email").value
+  // const emailError = document.getElementById("emailErrorMsg")
+  // const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
+// 
+  // if (regex.test(email) === false){ 
+    //  emailError.innerHTML="S'il vous plait entrez un email valide"
+    // return false
+  //  } else  if(email ===""){ 
+    //  emailError.innerHTML="S'il vous plait entrez un email valide"
+    //  return false
+  //  }
+// }
 
 
 function makeRequestFormulaire (){
@@ -373,9 +386,9 @@ function makeRequestFormulaire (){
     },
     products: getIdsFromCach()
   }
-  //console.log(body)
   return body
 }
+
 
 function getIdsFromCach() {
   const numberOfProducts = localStorage.length
