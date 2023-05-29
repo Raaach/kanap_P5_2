@@ -223,7 +223,7 @@ function submitForm(e){
     return // on lui mets un retunr comme ça si c'est incomplet il s'arretera là et ne lira pas tout le code
   }
   if (isFormulaireInvalide()) return
-  //if (isEmailValide()) return
+  if (isEmailValide()) return
   
   const body = makeRequestFormulaire()
   fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
@@ -243,115 +243,115 @@ function submitForm(e){
   //console.log(form.elements)
 }
 
-// function isFormulaireInvalide(){
-  // const form = document.querySelector(".cart__order__form")
-  // const inputs = form.querySelectorAll("input")
-  // inputs.forEach((input) => {
-    // if (input.value === "") {
-      // alert("S'il vous plait remplissez toute les cases")
-      // return true
-    // }
-    // return false
-  // })
-// }
-
 function isFormulaireInvalide(){
-  firstNameValide()
-  lastNameValide()
-  addressValide()
-  cityValide()
-  emailValide()
-  return 
+  const form = document.querySelector(".cart__order__form")
+  const inputs = form.querySelectorAll("input")
+  inputs.forEach((input) => {
+    if (input.value === "") {
+      alert("S'il vous plait remplissez toute les cases")
+      return true
+    }
+    return false
+  })
 }
-
-function firstNameValide(){
-  const firstNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
-  const firstName = document.getElementById("firstName")
-  const firstNameError = document.getElementById("firstNameErrorMsg")
-  const firstNameValue = firstName.value.trim()
-  let check = true
-  
-  if (firstNameValue.match(firstNameRegex)) {
-    firstNameError.innerHTML = ""
-  } else{
-    check = false
-    firstNameError.innerHTML = "Veuillez saisir un prénom valide"
-  }
-}
-
-function lastNameValide() {
-  const lastNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
-  const lastName = document.getElementById("lastName")
-  const lastNameError = document.getElementById("lastNameErrorMsg")
-  const lastNameValue = lastName.value.trim()
-  let check = true
-
-  if (lastNameValue.match(lastNameRegex)) {
-    lastNameError.innerHTML = ""
-  } else{
-    check = false
-    lastNameError.innerHTML = "Veuillez saisir un Nom valide"
-  }
-}
-
-function addressValide() {
-  const addressRegex =/^[A-Za-z0-9'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{5,50}$/
-  const address = document.getElementById("address")
-  const addressError = document.getElementById("addressErrorMsg")
-  const addressValue = address.value.trim()
-  let check = true
-
-  if (addressValue.match(addressRegex)) {
-    addressError.innerHTML = ""
-  } else{
-    check = false
-    addressError.innerHTML = "Veuillez saisir une Adresse valide"
-  }
-}
-
-function cityValide() {
-  const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
-  const city = document.getElementById("city")
-  const cityError = document.getElementById("cityErrorMsg")
-  const cityValue = city.value.trim()
-  let check = true
-
-  if (cityValue.match(cityRegex)) {
-    cityError.innerHTML = ""
-  } else{
-    check = false
-    cityError.innerHTML = "Veuillez saisir une Ville valide"
-  }
-}
-
-function emailValide() {
-  const emailRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]+@(.+){3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
-  const email = document.getElementById("email")
-  const emailError = document.getElementById("emailErrorMsg")
-  const emailValue = email.value.trim()
-  let check = true
-
-  if (emailValue.match(emailRegex)) {
-    emailError.innerHTML = ""
-  } else{
-    check = false
-    emailError.innerHTML = "Veuillez saisir une Eamil valide"
-  }
-}
-
-// function isEmailValide(){
-  // const email = document.querySelector("#email").value
-  // const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
-  // if (email == "" ){
-    // alert ("Veuillez saisir un email valide.")
-    // return true
-  // }
-  // else{ (regex.test(email) === false) 
-    // alert("S'il vous plait entrez un email valide")
-    // return true
-  // }
-  // return false
+// 
+// function isFormulaireInvalide(){
+  // firstNameValide()
+  // lastNameValide()
+  // addressValide()
+  // cityValide()
+  // emailValide()
+  // return 
 // }
+// 
+// function firstNameValide(){
+  // const firstNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
+  // const firstName = document.getElementById("firstName")
+  // const firstNameError = document.getElementById("firstNameErrorMsg")
+  // const firstNameValue = firstName.value.trim()
+  // let check = true
+  // 
+  // if (firstNameValue.match(firstNameRegex)) {
+    // firstNameError.innerHTML = ""
+  // } else{
+    // check = false
+    // firstNameError.innerHTML = "Veuillez saisir un prénom valide"
+  // }
+// }
+// 
+// function lastNameValide() {
+  // const lastNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
+  // const lastName = document.getElementById("lastName")
+  // const lastNameError = document.getElementById("lastNameErrorMsg")
+  // const lastNameValue = lastName.value.trim()
+  // let check = true
+// 
+  // if (lastNameValue.match(lastNameRegex)) {
+    // lastNameError.innerHTML = ""
+  // } else{
+    // check = false
+    // lastNameError.innerHTML = "Veuillez saisir un Nom valide"
+  // }
+// }
+// 
+// function addressValide() {
+  // const addressRegex =/^[A-Za-z0-9'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{5,50}$/
+  // const address = document.getElementById("address")
+  // const addressError = document.getElementById("addressErrorMsg")
+  // const addressValue = address.value.trim()
+  // let check = true
+// 
+  // if (addressValue.match(addressRegex)) {
+    // addressError.innerHTML = ""
+  // } else{
+    // check = false
+    // addressError.innerHTML = "Veuillez saisir une Adresse valide"
+  // }
+// }
+// 
+// function cityValide() {
+  // const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
+  // const city = document.getElementById("city")
+  // const cityError = document.getElementById("cityErrorMsg")
+  // const cityValue = city.value.trim()
+  // let check = true
+// 
+  // if (cityValue.match(cityRegex)) {
+    // cityError.innerHTML = ""
+  // } else{
+    // check = false
+    // cityError.innerHTML = "Veuillez saisir une Ville valide"
+  // }
+// }
+// 
+// function emailValide() {
+  // const emailRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]+@(.+){3,50}$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici//
+  // const email = document.getElementById("email")
+  // const emailError = document.getElementById("emailErrorMsg")
+  // const emailValue = email.value.trim()
+  // let check = true
+// 
+  // if (emailValue.match(emailRegex)) {
+    // emailError.innerHTML = ""
+  // } else{
+    // check = false
+    // emailError.innerHTML = "Veuillez saisir une Eamil valide"
+  // }
+// }
+
+function isEmailValide(){
+  const email = document.querySelector("#email").value
+  const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
+  if (email == "" ){
+    alert ("Veuillez saisir un email valide.")
+    return true
+  }
+  else{ (regex.test(email) === false) 
+    alert("S'il vous plait entrez un email valide")
+    return true
+  }
+  return false
+}
 
 
 function makeRequestFormulaire (){
