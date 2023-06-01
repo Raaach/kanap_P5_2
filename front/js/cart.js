@@ -12,12 +12,23 @@ function retrieveItemsFromCache(){
       const itemObject = JSON.parse(item) // parse pour en faire un objet
       cart.push(itemObject)// à chaque fois qu'on trouve un objet, on va pusher cette objet là 
     }
-}// a revoir car un peu chinois
+}
 
 //item correspond aux données qui sont l'id, image, couleur etc...
 
 function displayItem(item){
+      fetch(`http://localhost:3000/api/products/${item.id}`)
+              .then((response) => response.json())
+              .then((data) => {
+      //récupérer le prix avec fetch(product)
+
+                const price = document.querySelector("p2"); 
+                price.textContent = data.price ;
+            console.log(price);
+    })
+
   const article = makeArticle(item) //fait un article
+  article.set = item.id
     //console.log(article)//affiche article dans la console
   const imageDiv = makeImageDiv(item) //fait une div 
   article.appendChild(imageDiv)// on donné à article un enfant div qui lui contient l'image

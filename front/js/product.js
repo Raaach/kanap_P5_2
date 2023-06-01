@@ -34,7 +34,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     makeDescription(description)
     makeTitle(name)
     makePrice(price)
-}
+  }
 function makeImage(imageUrl, altTxt){                       //pour chaque donnée respective je lui associe un élement corresponddant du html 
   const image = document.createElement('img')
   image.src = imageUrl
@@ -89,7 +89,7 @@ function saveCart(color,quantity){
       id: id,                                       
      color: color,
      quantity: Number(quantity),
-     price: itemPrice,                              // le price à ne pas mettre dans le localstorage mais via fetch
+    // price: itemPrice,                              // le price à ne pas mettre dans le localstorage mais via fetch
      imageUrl : imgUrl, 
      altTxt : altText,
      name: articleName, 
@@ -97,11 +97,7 @@ function saveCart(color,quantity){
  localStorage.setItem(key, JSON.stringify(donnee))   
 }
 
-function isCartInvalid(color, quantity){
- // if (color == null || color === '' || quantity == null || quantity == 0){
- //     alert("Séléctionnez la couleur et la quantité, Merci !")// si on a pas séléctionné le prix ou la couleur
- //     return true                                             // veut dire arrète toi
- // }                                                           // alors la popup affichera le message alerte
+function isCartInvalid(color, quantity){                                                           // alors la popup affichera le message alerte
   if (color == null|| color === ''){
   alert("veuillez choisir une couleur, merciii :)") // si la couleur n'est pas choisis alerte moi (suivie du message)
   return true}
