@@ -19,16 +19,15 @@ function retrieveItemsFromCache(){
 function displayItem(item){
       fetch(`http://localhost:3000/api/products/${item.id}`)
               .then((response) => response.json())
-              .then((data) => {
+              .then((item) => {
       //récupérer le prix avec fetch(product)
-
-                const price = document.querySelector("p2"); 
-                price.textContent = data.price ;
-            console.log(price);
+                
+                const p2 = document.querySelector("p2"); 
+                p2.textContent = "Prix : " + item.price + " €" ;
+            console.log(p2);
     })
 
   const article = makeArticle(item) //fait un article
-  article.set = item.id
     //console.log(article)//affiche article dans la console
   const imageDiv = makeImageDiv(item) //fait une div 
   article.appendChild(imageDiv)// on donné à article un enfant div qui lui contient l'image
@@ -185,18 +184,18 @@ function makeDescription(item){
   h2.textContent = item.name
 
   const p = document.createElement("p")
-  p.textContent = item.color
+  p.textContent = " Color : " + item.color
 
   const p2 = document.createElement("p2")
-  p2.textContent = item.price + " €"
+  p2.textContent = "Prix : " + item.price + " €"
 
   description.appendChild(h2)
   description.appendChild(p)
   description.appendChild(p2)
   
   return description
+  
 }
-
 
 function displayArticle(article) { //on lui passe comme argument article
   document.querySelector("#cart__items").appendChild(article)
@@ -209,6 +208,7 @@ function makeArticle(item) {
   article.dataset.id = item.id//Ce stockage, invisible par le navigateur et par les moteurs de recherche, 
   //permet de stocker toutes les informations que nous souhaitons dans toutes les balises HTML de notre page
   article.dataset.color = item.color
+  article.dataset.price = item.price//
   return article
 }
 
@@ -260,28 +260,6 @@ function submitForm(e){
     .catch((err) => console.error(err)) // ça permet d'avoir un message en rouge
   //console.log(form.elements)
 }
-
-// 
-// function isFormulaireInvalide(){
-  // const form = document.querySelector(".cart__order__form")
-  // const inputs = form.querySelectorAll("input")
-  // inputs.forEach((input) => {
-    // if (input.value === "") {
-      // alert("S'il vous plait remplissez toute les cases")
-      // return true
-    // }
-    // return false
-  // })
-// }
-
-//  function isFormulaireIsValide(){
-  // if (firstNameValide())
-  // if (lastNameValide())
-  // if (addressValide())
-  // if (cityValide())
-  // if (isEmailValide())
-  //  return 
-//  }
 
 function firstNameValide(){
   const firstNameRegex = /^[A-Za-zâêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/
@@ -363,21 +341,6 @@ function isEmailValide() {
   return check
 }
 
-// function isEmailValide(){
-  // const email = document.querySelector("#email").value
-  // const emailError = document.getElementById("emailErrorMsg")
-  // const regex = /^[A-Za-z0-9+_.-]+@(.+)$/ //regex est une expresion décrit une syntaxe précise pour l'émail ici
-// 
-  // if (regex.test(email) === false){ 
-    //  emailError.innerHTML="S'il vous plait entrez un email valide"
-    // return false
-  //  } else  if(email ===""){ 
-    //  emailError.innerHTML="S'il vous plait entrez un email valide"
-    //  return false
-  //  }
-// }
-
-
 function makeRequestFormulaire (){
   const form = document.querySelector(".cart__order__form")
 
@@ -406,7 +369,7 @@ function getIdsFromCach() {
   const ids = []
   for (let i = 0; i < numberOfProducts; i++) {
     const key = localStorage.key(i)
-    //console.log(key)
+    // console.log(key)
     const id = key.split("-")[0]
     ids.push(id)
   }
