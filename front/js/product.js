@@ -24,17 +24,25 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
   function handleData(Kanap){                                 //je récupère toute les donnéees du Kanap
    //console.log({Kanap})
-    const {altTxt, colors, description, imageUrl,name, price}= Kanap//et je les passe à make... de chacun d'eux
+    const {altTxt, colors, description, imageUrl,name, price, _id}= Kanap//et je les passe à make... de chacun d'eux
     imgUrl= imageUrl
     altText = altTxt
     articleName = name
     itemPrice = price
+    itemId = _id
     makeImage(imageUrl, altTxt)
     makeColor(colors)
     makeDescription(description)
     makeTitle(name)
     makePrice(price)
+    makeId (id)
   }
+    function makeId(id) {
+      const itemElement = document.querySelector('.item');
+      itemElement.id = id;
+      console.log(id);
+  }
+
 function makeImage(imageUrl, altTxt){                       //pour chaque donnée respective je lui associe un élement corresponddant du html 
   const image = document.createElement('img')
   image.src = imageUrl
@@ -83,13 +91,13 @@ if (button != null){                                                // si le but
     })
 }
 
-function saveCart(color,quantity){
+function saveCart(color,quantity, id){
   const key = `${id}-${color}`                        // key est égale à l'id et à la couleur correspondant
   const donnee = {
-      id: id,                                       
+      id: itemId,                                       
      color: color,
      quantity: Number(quantity),
-    // price: itemPrice,                              // le price à ne pas mettre dans le localstorage mais via fetch
+     //price: itemPrice,                              // le price à ne pas mettre dans le localstorage mais via fetch
      imageUrl : imgUrl, 
      altTxt : altText,
      name: articleName, 

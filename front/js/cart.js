@@ -17,16 +17,17 @@ function retrieveItemsFromCache(){
 //item correspond aux données qui sont l'id, image, couleur etc...
 
 function displayItem(item){
-      fetch(`http://localhost:3000/api/products/${item.id}`)
-              .then((response) => response.json())
-              .then((item) => {
-      //récupérer le prix avec fetch(product)
-                
-                const p2 = document.querySelector("p2"); 
-                p2.textContent = "Prix : " + item.price + " €" ;
-            console.log(p2);
-    })
-
+      // fetch(`http://localhost:3000/api/products/${item.id}`)
+              // .then((response) => response.json())
+              // .then((item) => {
+      // récupérer le prix avec fetch(product)
+                // 
+                // const p2 = document.querySelector("p2"); 
+                // p2.textContent = "Prix : " + item.price + " €" ;
+            // console.log(p2);
+    // })
+// 
+  const id = makeArticleId(item.id)
   const article = makeArticle(item) //fait un article
     //console.log(article)//affiche article dans la console
   const imageDiv = makeImageDiv(item) //fait une div 
@@ -38,7 +39,9 @@ function displayItem(item){
   displayTotalQuantity()
   displayTotalPrice()
 }
-
+function makeArticleId(){
+  
+}
 function displayTotalQuantity(){
   const totalQuantity = document.querySelector("#totalQuantity")
   const total = cart.reduce((total, item) => total + item.quantity, 0)
@@ -193,8 +196,8 @@ function makeDescription(item){
   description.appendChild(p)
   description.appendChild(p2)
   
+  //console.log(description)
   return description
-  
 }
 
 function displayArticle(article) { //on lui passe comme argument article
