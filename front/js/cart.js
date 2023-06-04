@@ -17,17 +17,6 @@ function retrieveItemsFromCache(){
 //item correspond aux données qui sont l'id, image, couleur etc...
 
 function displayItem(item){
-      // fetch(`http://localhost:3000/api/products/${item.id}`)
-              // .then((response) => response.json())
-              // .then((item) => {
-      // récupérer le prix avec fetch(product)
-                // 
-                // const p2 = document.querySelector("p2"); 
-                // p2.textContent = "Prix : " + item.price + " €" ;
-            // console.log(p2);
-    // })
-// 
-  const id = makeArticleId(item.id)
   const article = makeArticle(item) //fait un article
     //console.log(article)//affiche article dans la console
   const imageDiv = makeImageDiv(item) //fait une div 
@@ -39,25 +28,29 @@ function displayItem(item){
   displayTotalQuantity()
   displayTotalPrice()
 }
-function makeArticleId(){
-  
-}
+
 function displayTotalQuantity(){
   const totalQuantity = document.querySelector("#totalQuantity")
   const total = cart.reduce((total, item) => total + item.quantity, 0)
   totalQuantity.textContent = total
 } 
 
-function displayTotalPrice(){
-  let total = 0
-  const totalPrice = document.querySelector("#totalPrice")
-  cart.forEach(item => {
-    const totalUnitPrice = item.price * item.quantity
-    total = total + totalUnitPrice // on peut aussi l'écrire total += totalUnitPrice
-  })
-  //console.log(total)
-  totalPrice.textContent = total
+function displayTotalPrice() {
+  let total = 0;
+  const totalPrice = document.querySelector("#totalPrice");
+
+  cart.forEach((item) => {
+    const totalUnitPrice = item.price * item.quantity;
+
+    if (!isNaN(totalUnitPrice)) { // Check if totalUnitPrice is a valid number
+      total += totalUnitPrice;
+    }
+  });
+
+  totalPrice.textContent = total.toFixed(2); // Convert total to a fixed decimal number with 2 decimal places
 }
+
+console.log(totalPrice)
 
 /*************************/
 
@@ -189,12 +182,25 @@ function makeDescription(item){
   const p = document.createElement("p")
   p.textContent = " Color : " + item.color
 
-  const p2 = document.createElement("p2")
-  p2.textContent = "Prix : " + item.price + " €"
+  fetch(`http://localhost:3000/api/products/${item.id}`)
+  .then((response) => response.json())
+  .then((product) => {
+    const price = product.price;
+    const p2 = document.createElement("p");
+    p2.textContent = "Price: " + price + " €";
+    description.appendChild(p2);
+    item.price = price; // Update the item object with the fetched price
+    displayTotalPrice()
+  })
+  .catch((error) => {
+    console.error("Error fetching product:", error);
+    const p2 = document.createElement("p2");
+    p2.textContent = "Price: Error fetching price";
+    description.appendChild(p2);
+  });
 
   description.appendChild(h2)
   description.appendChild(p)
-  description.appendChild(p2)
   
   //console.log(description)
   return description
