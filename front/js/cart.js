@@ -50,7 +50,7 @@ function displayTotalPrice() {
   totalPrice.textContent = total.toFixed(2); // Convert total to a fixed decimal number with 2 decimal places
 }
 
-console.log(totalPrice)
+
 
 /*************************/
 
@@ -235,16 +235,15 @@ function makeImageDiv(item){
 const orderButton = document.querySelector("#order")
 if (orderButton != null ){
   orderButton.addEventListener("click", (e) => submitForm(e))
-
 }
+console.log(orderButton)
 
 function submitForm(e){
   e.preventDefault() // preventDefeult permet de ne pas raffraichir la page
   if (cart.length === 0) {
-    alert(" Veuillez séléctionnner un produit")
+    alert(" Veuillez sélectionner un produit")
     return // on lui mets un retunr comme ça si c'est incomplet il s'arretera là et ne lira pas tout le code
-  }
-  //if (!isFormulaireIsValide())  return 
+  } 
   if (!firstNameValide()) return
   if (!lastNameValide()) return
   if (!addressValide()) return
@@ -253,16 +252,19 @@ function submitForm(e){
 
   const body = makeRequestFormulaire()
   
-  fetch("http://localhost:3000/api/products/order", {// on fait cela pour poster les données dans order avec POST
+  fetch("http://localhost:3000/api/products/order",
+   {// on fait cela pour poster les données dans order avec POST
     method: "POST",
     body: JSON.stringify(body),
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json"
     }
   })
     .then((res) => res.json())
     .then((data) => {
       const orderId = data.orderId
+      
       window.location.href = "/front/html/confirmation.html" + "?orderId=" + orderId
       return console.log(data)
     })
@@ -378,7 +380,7 @@ function getIdsFromCach() {
   const ids = []
   for (let i = 0; i < numberOfProducts; i++) {
     const key = localStorage.key(i)
-    // console.log(key)
+    console.log(key)
     const id = key.split("-")[0]
     ids.push(id)
   }

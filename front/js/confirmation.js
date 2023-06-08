@@ -8,10 +8,15 @@ function getOrderId(){
     return  urlParams.get("orderId")
 }
 
-function displayOrderId(orderId){
-    const orderIdElement = document.getElementById("orderId")
-    orderIdElement.textContent = orderId
-}
+function displayOrderId(orderId) {
+    const orderIdElement = document.getElementById("orderId");
+    if (orderId) {
+      orderIdElement.textContent = orderId;
+    } else {
+      orderIdElement.textContent = "No order ID available";
+    }
+  }
+  
 
 function removeAllCache(){
     const cache = window.localStorage

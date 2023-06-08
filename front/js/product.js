@@ -91,7 +91,7 @@ if (button != null){                                                // si le but
     })
 }
 
-function saveCart(color,quantity, id){
+function saveCart(color,quantity){
   const key = `${id}-${color}`                        // key est égale à l'id et à la couleur correspondant
   const donnee = {
       id: itemId,                                       
