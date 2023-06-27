@@ -2,8 +2,6 @@
 const cart = []                                     //cette const est un tableau
 
 retrieveItemsFromCache()
-//console.log(cart)                                 //on le place ici pour permettre à la fonction 
-                                                    //d'apparaitre avec console.log dans la console 
 cart.forEach((item)=>displayItem(item))             //une boucle: pour chaque item lance la fonction
 
 //fonction pour récuperer ce qu'il y a dans le localStorage
@@ -21,7 +19,6 @@ function retrieveItemsFromCache(){
 //fonction créant l'item
 function displayItem(item){
   const article = makeArticle(item)                 //fait un article
-    //console.log(article)                          //affiche article dans la console
   const imageDiv = makeImageDiv(item)               //fait une div 
   article.appendChild(imageDiv)                     // on donné à article un enfant div qui lui contient l'image
   
@@ -220,7 +217,6 @@ function makeDescription(item){
   description.appendChild(h2)
   description.appendChild(p)
   
-  //console.log(description)
   return description
 }
 
@@ -259,7 +255,6 @@ const orderButton = document.querySelector("#order")
 if (orderButton != null ){
   orderButton.addEventListener("click", (e) => submitForm(e))
 }
-//console.log(orderButton)
 
 // fonction soummetre le formulaire
 function submitForm(e){
@@ -293,10 +288,10 @@ function submitForm(e){
       const orderId = data.orderId
       
       window.location.href = "/front/html/confirmation.html" + "?orderId=" + orderId
-      return //console.log(data)
+      return 
     })
     .catch((err) => console.error(err)) 
-  //console.log(form.elements)
+  
 }
 
 /* fonctions pour valider ou invalider le nom, prénom, le mail ....*/
@@ -351,7 +346,7 @@ function addressValide() {
 }
 
 function cityValide() {
-  const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour la city ici//
+  const cityRegex =/^[A-Za-z'âêîôûäëïöüÄËÏÖÜÂÊÎÔÛéèà\s]{3,50}$/ //regex est une expresion décrit une syntaxe précise pour la ici//
   const city = document.getElementById("city")
   const cityError = document.getElementById("cityErrorMsg")
   const cityValue = city.value.trim()
@@ -410,7 +405,7 @@ function getIdsFromCach() {
   const ids = []
   for (let i = 0; i < numberOfProducts; i++) {
     const key = localStorage.key(i)
-    console.log(key)
+    
     const id = key.split("-")[0]
     ids.push(id)
   }

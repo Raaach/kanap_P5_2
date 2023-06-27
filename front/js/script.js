@@ -6,7 +6,6 @@ fetch("http://localhost:3000/api/products/")
     return response.json();
   })
   .then((kanap) => {
-    // console.log(kanap)
     return produitAccueil(kanap);
   });
 

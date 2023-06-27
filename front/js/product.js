@@ -4,7 +4,7 @@ fetch sur la page produit*/
 
 const queryString = new URLSearchParams(window.location.search);
 const id = queryString.get("id");
-console.log(id);
+
 if (id != null){
   let itemPrice = 0
   let imgUrl, altText, articleName
@@ -18,12 +18,11 @@ fetch(`http://localhost:3000/api/products/${id}`)
     return res.json();
   })
   .then((data) => {
-    // console.log("les Kanap",res)
     return handleData(data);
   });
 
   function handleData(Kanap){                                 //je récupère toute les donnéees du Kanap
-   //console.log({Kanap})
+   
     const {altTxt, colors, description, imageUrl,name, price, _id}= Kanap//et je les passe à make... de chacun d'eux
     imgUrl= imageUrl
     altText = altTxt
@@ -44,7 +43,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
 function makeId(id) {
   const itemElement = document.querySelector('.item');
   itemElement.id = id;
-      //console.log(id);
 }
 
 //fonction créant l'image et ses éléments
