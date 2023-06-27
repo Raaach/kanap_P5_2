@@ -1,5 +1,5 @@
-/*Utilisation de window location search pour obtenir l'url appartir de ?id et suppresion des
-3 première caractère avec slice pour avoir uniquement le numéro de l'id pour faire des appel API avec 
+/*Utilisation de window location search pour obtenir l'url appartir de ?id
+ pour avoir uniquement le numéro de l'id pour faire des appel API avec 
 fetch sur la page produit*/
 
 const queryString = new URLSearchParams(window.location.search);
@@ -37,13 +37,18 @@ fetch(`http://localhost:3000/api/products/${id}`)
     makePrice(price)
     makeId (id)
   }
-    function makeId(id) {
-      const itemElement = document.querySelector('.item');
-      itemElement.id = id;
-      console.log(id);
-  }
 
-function makeImage(imageUrl, altTxt){                       //pour chaque donnée respective je lui associe un élement corresponddant du html 
+ /*pour chaque donnée respective je lui associe un élement corresponddant du html */
+
+//fonction créant l'id 
+function makeId(id) {
+  const itemElement = document.querySelector('.item');
+  itemElement.id = id;
+      //console.log(id);
+}
+
+//fonction créant l'image et ses éléments
+function makeImage(imageUrl, altTxt){                      
   const image = document.createElement('img')
   image.src = imageUrl
   image.alt = altTxt
@@ -51,6 +56,7 @@ function makeImage(imageUrl, altTxt){                       //pour chaque donné
   parent.appendChild(image)
 }
 
+//fonction créant les couleurs en utilisant forEach 
 function makeColor(colors){
   const select = document.querySelector("#colors")
   if (select != null){
@@ -63,34 +69,39 @@ function makeColor(colors){
   }
 }
 
+//fonction créant l'élément prix 
 function makePrice(price) {
   const span = document.querySelector("#price")               //attention le prix à ne pas mettre dans le localstorage
   const h3 = document.querySelector("#price")
   h3.textContent = price
 }
 
+//fonction créant l'élément description
 function makeDescription(description){
   const p = document.querySelector("#description")
   p.textContent = description
 }
 
+//fonction créant le titre du kanap
 function makeTitle(name){
   const h1 = document.querySelector("#title")
   h1.textContent = name
 }
 
+//const du bouton 'ajout au panier'
 const button = document.querySelector("#addToCart")                 //le bouton panier on le relie via docuement querry
 if (button != null){                                                // si le button est non null
-    button.addEventListener("click",(e) => {                        //
-        const color = document.querySelector("#colors").value
-        const quantity = document.querySelector("#quantity").value
+    button.addEventListener("click",(e) => {                        //au click 
+        const color = document.querySelector("#colors").value       //on a la const color.value 
+        const quantity = document.querySelector("#quantity").value  //on a la const quantity.value
 
-        if (isCartInvalid(color, quantity)) return
-        saveCart (color, quantity)
-        window.location.href = "cart.html"                              // dès le clique du bouton panier on est redirigé vers le panier
+        if (isCartInvalid(color, quantity)) return                  //si la fonction est onvalid return: arrte toi là
+        saveCart (color, quantity)                                  //lance la fonction saveCart
+        window.location.href = "cart.html"                          // et enfin redirige nous vers le panier
     })
 }
 
+//fonction créant la sauvegarde en localStorage
 function saveCart(color,quantity){
   const key = `${id}-${color}`                        // key est égale à l'id et à la couleur correspondant
   const donnee = {
@@ -105,14 +116,15 @@ function saveCart(color,quantity){
  localStorage.setItem(key, JSON.stringify(donnee))   
 }
 
-function isCartInvalid(color, quantity){                                                           // alors la popup affichera le message alerte
+//fonction permettant de valider ou invalider le remplissage des cases couleurs et quantité
+function isCartInvalid(color, quantity){             
   if (color == null|| color === ''){
-  alert("veuillez choisir une couleur, merciii :)") // si la couleur n'est pas choisis alerte moi (suivie du message)
+  alert("veuillez choisir une couleur, merciii :)")  // si la couleur n'est pas choisis alerte moi (suivie du message)
   return true}
   if (quantity == null || quantity == 0 ){
   alert("veuillez choisir une quantité, merci bien à vous :)")
-  return true} //veut dire arrete toi 
+  return true}                                      //return veut dire arrete toi 
   if (quantity <= 0 || quantity >= 101 ){
     alert("veuillez choisir une quatité entre 1 et 100, merci bien")
     return true}
-} //alors la popup affichera le message alerte
+}                                                   //alors la popup affichera le message alerte
